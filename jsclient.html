@@ -7,7 +7,7 @@
     <title>Client JS</title>
     <style></style>
     <script>
-        function ajax_request(req) {
+        function customer_request(method, name) {
             var xhttp = new XMLHttpRequest();
             var div_resultat = document.getElementById("resultat-ajax");
 
@@ -31,17 +31,17 @@
                 }
             };
     
-            xhttp.open("GET", "http://localhost/refact4-REST/" + req + ".php", true);
+            xhttp.open(method, "http://localhost/refact4-REST/customer.php?customer_name=" + name, true);
             xhttp.send();
         }
     </script>
 </head>
 
 <body>
-<a onclick="ajax_request('movie');">movie</a>
-<a onclick="ajax_request('customer');">customer</a>
-<a onclick="ajax_request('statement');">statement</a>
-<div id="resultat-ajax" onload="ajax_request()">response:</div>
+<a onclick="customer_request('GET', 'Maryse Dubé');">GET Maryse Dubé</a>
+<a onclick="customer_request('PUT', 'Maryse Dubé');">PUT Maryse Dubé</a>
+<a onclick="customer_request('OPTIONS', 'Georges-Henri Jean');">OPTIONS Georges-Henri Jean</a>
+<div id="resultat-ajax">response:</div>
 
 </body>
 </html>
