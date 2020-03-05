@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Client JS</title>
+    <style></style>
+    <script>
+        function ajax_request(req) {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    var json_array = JSON.parse(this.responseText);
+                   
+                    console.log(json_array);
+
+                    div_resultat.innerHTML += this.responseText;
+                    /*for(var i = 0; i < json_array.length; i++){
+                        var produit = json_array[i];		
+                        
+                    }*/
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+    
+            xhttp.open("GET", "http://localhost/refact4-REST/" + req + ".php", true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+<a onclick="ajax_request('movie');">movie</a>
+<a onclick="ajax_request('customer');">customer</a>
+<a onclick="ajax_request('statement');">statement</a>
+<div id="resultat-ajax" onload="ajax_request()">response:</div>
+
+</body>
+</html>
