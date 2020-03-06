@@ -47,7 +47,7 @@ if($request == "OPTIONS"){
         if($found != null){
             $response .= "Found customer: " . $found->getName() . ". ";
         } else {
-            $response .= "Found customer: None.";
+            $response .= "Customer does not exist in database.";
         }
     } else {
         $response .= "Get customer: no name specified";

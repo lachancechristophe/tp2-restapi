@@ -31,12 +31,14 @@ $main = new MainController();
 $main->addMovie('Chicago', 'CategoryClassical');
 
 if($request == "OPTIONS"){
-    $response .= "Movie: OPTIONS";
-    $response .= "GET parameters-";
-    $response .= "name: Movie title";
-    $response .= "PUT parameters-";
-    $response .= "title: Movie title";
-    $response .= "category: [CategoryClassical, CategoryRegular, CategoryClassical, CategoryNewRelease, CategoryChildren]";
+    $response .= "Movie: OPTIONS. ";
+    $response .= "GET parameters- ";
+    $response .= "name: Movie title. ";
+    $response .= "Returns: Movie found or Movie not found. ";
+    $response .= "PUT parameters- ";
+    $response .= "title: Movie title. ";
+    $response .= "category: [CategoryClassical, CategoryRegular, CategoryClassical, CategoryNewRelease, CategoryChildren]. ";
+    $response .= "Returns: Movie created or Error creating movie. ";
 } else if($request == "GET") {
     if(isset($_GET['title'])){
         $title = filter_var($_GET['title'], FILTER_SANITIZE_STRING);
@@ -46,7 +48,7 @@ if($request == "OPTIONS"){
         if($found != null){
             $response .= "Found movie: " . $found->getTitle() . ", category: " . $found->getCategoryName(). ". ";
         } else {
-            $response .= "Found movie: None.";
+            $response .= "Movie not found in database. ";
         }
 
     } else {
