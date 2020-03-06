@@ -7,22 +7,19 @@
     <title>Client JS</title>
     <style></style>
     <script>
-        function customer_request(method, name) {
+
+        var service_statement = "statement.php";
+        var service_movie = "movie.php";
+        var service_customer = "customer.php";
+
+        function options_request(service) {
             var xhttp = new XMLHttpRequest();
             var div_resultat = document.getElementById("resultat-ajax");
-
+            var request_value = document.getElementById("requete").value;
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
                     var json_array = JSON.parse(this.responseText);
-                   
-                    console.log(json_array);
-
                     div_resultat.innerHTML += this.responseText;
-                    /*for(var i = 0; i < json_array.length; i++){
-                        var produit = json_array[i];		
-                        
-                    }*/
                 } else {
                     if(this.readyState == 4){
                         console.log("Erreur: " + ajaxRequest.status);}
@@ -31,17 +28,187 @@
                 }
             };
     
-            xhttp.open(method, "http://localhost/refact4-REST/customer.php?customer_name=" + name, true);
+            xhttp.open('OPTIONS', "http://localhost/refact4-REST/" + service + ".php", true);
             xhttp.send();
+        }
+
+        function customer_get_request() {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+            var request_value = document.getElementById("requete").value;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var json_array = JSON.parse(this.responseText);
+                    div_resultat.innerHTML += this.responseText;
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+    
+            xhttp.open('GET', "http://localhost/refact4-REST/" + service_customer + "?customer_name=" + request_value, true);
+            xhttp.send();
+        }
+
+        function movie_get_request() {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+            var request_value = document.getElementById("requete").value;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var json_array = JSON.parse(this.responseText);
+                    div_resultat.innerHTML += this.responseText;
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+    
+            xhttp.open('GET', "http://localhost/refact4-REST/" + service_movie + "?title=" + request_value, true);
+            xhttp.send();
+        }
+
+        function movie_put_request() {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+            var request_value = document.getElementById("requete").value;
+            var request_2_value = document.getElementById("requete-2").value;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    
+                    div_resultat.innerHTML += this.responseText;
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+
+            
+    
+            xhttp.open('PUT', "http://localhost/refact4-REST/" + service_movie, true);
+            // xhttp.open('PUT', "http://localhost/refact4-REST/reqdump.php", true);
+            xhttp.setRequestHeader("Content-type", "text/json");
+            //xhttp.send({title: request_value, category: request_2_value});
+            xhttp.send('{"title": "'+request_value+'", "category": "'+request_2_value+'"}');
+            //xhttp.send("{title: '"+request_value+"', category: '"+request_2_value+"'}");
+        }
+
+        function statement_get_request() {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+            var request_value = document.getElementById("requete").value;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var json_array = JSON.parse(this.responseText);
+                    div_resultat.innerHTML += json_array.response_text;
+                    console.log(json_array);
+                    if(json_array.customer_name){
+                        process_statement(json_array);
+                    }
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+    
+            xhttp.open('GET', "http://localhost/refact4-REST/" + service_statement + "?customer_name=" + request_value, true);
+            xhttp.send();
+        }
+
+        function process_statement(statement_data){
+            var div_resultat = document.getElementById("resultat-statement");
+
+            div_resultat.innerHTML += "Statement for customer " + statement_data.customer_name + ". <br>";
+            for(var i = 0; i < statement_data.rentals.length; i++){
+                div_resultat.innerHTML += "Rented movie: " + statement_data.rentals[i][0] + ". Total charge for movie: " + statement_data.rentals[i][1]+ ".<br>";
+            }
+            div_resultat.innerHTML += "Frequent renter points: " + statement_data.renter_points + ".<br>";
+            div_resultat.innerHTML += "Total charge for statement: " + statement_data.total_amount + ".<br>";
         }
     </script>
 </head>
 
 <body>
-<a onclick="customer_request('GET', 'Maryse Dubé');">GET Maryse Dubé</a>
-<a onclick="customer_request('PUT', 'Maryse Dubé');">PUT Maryse Dubé</a>
-<a onclick="customer_request('OPTIONS', 'Georges-Henri Jean');">OPTIONS Georges-Henri Jean</a>
-<div id="resultat-ajax">response:</div>
+
+
+<form>
+    <input type="text" id="requete">
+    <input type="text" id="requete-2"> <br><br>
+
+    <input type="submit" id="customer-options" value="OPTIONS customer">
+    <input type="submit" id="customer-put" value="PUT customer">
+    <input type="submit" id="customer-get" value="GET customer"> <br><br>
+
+    <input type="submit" id="movie-options" value="OPTIONS movie">
+    <input type="submit" id="movie-put" value="PUT movie">
+    <input type="submit" id="movie-get" value="GET movie"> <br><br>
+
+    <input type="submit" id="statement-options" value="OPTIONS statement">
+    <input type="submit" id="statement-get" value="GET statement"> 
+    
+</form> <br>
+
+<div id="resultat-ajax">Responses Ajax: <br>
+
+</div>
+
+<div id="resultat-statement">Statement: <br>
+
+</div>
+
+<script>
+    document.getElementById("customer-options").addEventListener("click", function(event){
+        event.preventDefault()
+        options_request('customer');
+    });
+
+    document.getElementById("movie-options").addEventListener("click", function(event){
+        event.preventDefault()
+        options_request('movie');
+    });
+
+    document.getElementById("statement-options").addEventListener("click", function(event){
+        event.preventDefault()
+        options_request('statement');
+    });
+
+    document.getElementById("customer-get").addEventListener("click", function(event){
+        event.preventDefault()
+        customer_get_request();
+    });
+
+    document.getElementById("movie-get").addEventListener("click", function(event){
+        event.preventDefault()
+        movie_get_request();
+    });
+
+    document.getElementById("statement-get").addEventListener("click", function(event){
+        event.preventDefault()
+        statement_get_request();
+    });
+
+    document.getElementById("customer-put").addEventListener("click", function(event){
+        event.preventDefault()
+        customer_put_request();
+    });
+
+    document.getElementById("movie-put").addEventListener("click", function(event){
+        event.preventDefault()
+        movie_put_request();
+    });
+
+</script>
 
 </body>
 </html>

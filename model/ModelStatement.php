@@ -26,7 +26,7 @@ class ModelStatement {
         return $this->_customerName;
     }
 
-    public function getTotalAmount():int {
+    public function getTotalAmount():float {
         return $this->_totalAmount;
     }
 

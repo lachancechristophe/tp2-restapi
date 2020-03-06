@@ -29,17 +29,17 @@ $main->addCustomer("Georges-Henri Jean");
 
 if($request == "OPTIONS"){
     $response .= "Customer: OPTIONS. ";
-    $response .= "GET parameters: ";
+    $response .= "GET parameters- ";
     $response .= "customer_name: Customer name. ";
     $response .= "Returns: Customer exists or Customer does not exist. ";
 
-    $response .= "PUT parameters: JSON format";
+    $response .= "PUT parameters- ";
     $response .= "customer_name: Customer name. ";
     $response .= "Returns: Customer created. ";
 }else if($request == "GET") {
     
     // findCustomer(string $customerName)
-    if(isset($_GET['customer_name'])){
+    if(isset($_GET['customer_name']) && $_GET['customer_name'] != ""){
         $customer_name = filter_var($_GET['customer_name'], FILTER_SANITIZE_STRING);
         $response .= "Get customer: " . $customer_name. ". ";
 

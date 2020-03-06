@@ -40,7 +40,7 @@ if($request == "OPTIONS"){
     $response .= "category: [CategoryClassical, CategoryRegular, CategoryClassical, CategoryNewRelease, CategoryChildren]. ";
     $response .= "Returns: Movie created or Error creating movie. ";
 } else if($request == "GET") {
-    if(isset($_GET['title'])){
+    if(isset($_GET['title']) && $_GET['title'] != ""){
         $title = filter_var($_GET['title'], FILTER_SANITIZE_STRING);
         $response .= "Get movie: " . $title . ".";
         
@@ -60,10 +60,15 @@ if($request == "OPTIONS"){
     $data = json_decode($json);
 
     if(isset($data->title)){
-        $response .= "Put movie: " . $found->getTitle() . ", category: " . $found->getCategoryName();
+        $response .= "Put movie: " . $data->title . ", category: " . $data->category;
         $main->addMovie($data->title, $data->category);
 
         $found = $main->findMovie($data->title);
+        if($found != null){
+            $response .= "Movie added to database: " . $found->getTitle() . ", category: " . $found->getCategoryName(). ". ";
+        } else {
+            $response .= "Error creating movie. ";
+        }
         
     } else {
         $response .= "Put movie: no name specified";
