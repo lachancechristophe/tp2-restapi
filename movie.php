@@ -27,7 +27,11 @@ $response = "";
 
 $main = new MainController();
 
+// Ajouter un film a la "Base de donnees"
+$main->addMovie('Chicago', 'CategoryClassical');
+
 if($request == "OPTIONS"){
+    $response .= "Movie: OPTIONS";
     $response .= "GET parameters-";
     $response .= "name: Movie title";
     $response .= "PUT parameters-";
@@ -35,9 +39,18 @@ if($request == "OPTIONS"){
     $response .= "category: [CategoryClassical, CategoryRegular, CategoryClassical, CategoryNewRelease, CategoryChildren]";
 } else if($request == "GET") {
     if(isset($_GET['title'])){
-        $response .= "Get movie: " . $_GET['title'];
+        $title = filter_var($_GET['title'], FILTER_SANITIZE_STRING);
+        $response .= "Get movie: " . $title . ".";
+        
+        $found = $main->findMovie($title);
+        if($found != null){
+            $response .= "Found movie: " . $found->getTitle() . ", category: " . $found->getCategoryName(). ". ";
+        } else {
+            $response .= "Found movie: None.";
+        }
+
     } else {
-        $response .= "Get movie: no name specified";
+        $response .= "Get movie: No name specified.";
     }
 } else if($request == "PUT") {
 
@@ -45,11 +58,11 @@ if($request == "OPTIONS"){
     $data = json_decode($json);
 
     if(isset($data->title)){
-        
+        $response .= "Put movie: " . $found->getTitle() . ", category: " . $found->getCategoryName();
         $main->addMovie($data->title, $data->category);
 
         $found = $main->findMovie($data->title);
-        $response .= "Put movie: " . $found->getTitle() . ", category: " . $found->getCategoryName();
+        
     } else {
         $response .= "Put movie: no name specified";
     }

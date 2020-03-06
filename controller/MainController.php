@@ -30,7 +30,7 @@ class MainController {
         $this->_movieList->add(new Movie($movieTitle, $movieCat));
     }
 
-    public function findCustomer(string $customerName): Customer {
+    public function findCustomer(string $customerName) {
         $foundCustomer = null;
         foreach ($this->_customerList->getList() as $customer) {
             if ($customer->getName() == $customerName) {
@@ -40,7 +40,7 @@ class MainController {
         return $foundCustomer;
     }
 
-    public function findMovie(string $movieTitle): Movie  {
+    public function findMovie(string $movieTitle)  {
         $foundMovie = null;
         foreach ($this->_movieList->getList() as $movie) {
             if ($movie->getTitle() == $movieTitle) {
