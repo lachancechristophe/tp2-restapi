@@ -7,7 +7,7 @@ class MainController {
     private $_movieList;
 
     public function __construct() {
-        $this->_viewStatement = new ViewStatement();
+        //$this->_viewStatement = new ViewStatement();
         $this->_customerList = new CustomerList();
         $this->_movieList = new MovieList();
     }
