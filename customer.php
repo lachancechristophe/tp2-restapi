@@ -72,7 +72,7 @@ if($request == "OPTIONS"){
         $response .= "Put customer: no name specified";
     }
 } else {
-    $response .= "customer: no request or bad request.";
+    $response .= "Customer- Error 405: no request or bad request.";
 }
 
 echo json_encode($response);

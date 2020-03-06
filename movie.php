@@ -70,7 +70,7 @@ if($request == "OPTIONS"){
     }
 
 } else {
-    $response .= "movie: no request or bad request.";
+    $response .= "Movie- Error 405: no request or bad request.";
 }
 
 echo json_encode($response);

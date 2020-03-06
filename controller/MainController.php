@@ -14,7 +14,8 @@ class MainController {
 
     public function prepareStatementForCustomer(Customer $c) {
         $data = new ModelStatement($c->getRentals(), $c->getName());
-        $this->_viewStatement->setData($data);
+        return $data;
+        //$this->_viewStatement->setData($data);
     }
 
     public function getStatement():string {
@@ -23,6 +24,10 @@ class MainController {
 
     public function addCustomer(string $customerName) {
         $this->_customerList->add(new Customer($customerName));
+    }
+
+    public function addCustomerInstance(Customer $customer) {
+        $this->_customerList->add($customer);
     }
 
     public function addMovie(string $movieTitle, string $movieCatStr) {
