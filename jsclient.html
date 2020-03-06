@@ -91,14 +91,31 @@
                 }
             };
 
-            
-    
             xhttp.open('PUT', "http://localhost/refact4-REST/" + service_movie, true);
-            // xhttp.open('PUT', "http://localhost/refact4-REST/reqdump.php", true);
             xhttp.setRequestHeader("Content-type", "text/json");
-            //xhttp.send({title: request_value, category: request_2_value});
             xhttp.send('{"title": "'+request_value+'", "category": "'+request_2_value+'"}');
-            //xhttp.send("{title: '"+request_value+"', category: '"+request_2_value+"'}");
+        }
+
+        function customer_put_request() {
+            var xhttp = new XMLHttpRequest();
+            var div_resultat = document.getElementById("resultat-ajax");
+            var request_value = document.getElementById("requete").value;
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    
+                    div_resultat.innerHTML += this.responseText;
+                } else {
+                    if(this.readyState == 4){
+                        console.log("Erreur: " + ajaxRequest.status);}
+                    else{
+                        console.log("State: " + this.readyState)}
+                }
+            };
+            
+            xhttp.open('PUT', "http://localhost/refact4-REST/" + service_customer, true);
+            xhttp.setRequestHeader("Content-type", "text/json");
+            xhttp.send('{"customer_name": "'+request_value+'"}');
         }
 
         function statement_get_request() {
