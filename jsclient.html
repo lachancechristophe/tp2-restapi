@@ -7,32 +7,28 @@
     <title>Client JS</title>
     <link rel="stylesheet" href="style/ajax-client.css">
     <script src="js/script.js"></script>
-    
-    <script src="js/script.js"></script>
 </head>
 
 <body>
+    <form id="formulaire-requetes">
+        <div style="width: 50%; margin: 0 auto;">
+            <label for="requete">Argument 1</label>
+            <input type="text" id="requete">
+            <label for="requete-2">Argument 2</label>
+            <input type="text" id="requete-2"> <br><br>
 
+            <input type="submit" id="customer-options" value="OPTIONS customer">
+            <input type="submit" id="customer-put" value="PUT customer">
+            <input type="submit" id="customer-get" value="GET customer"> <br><br>
 
-<form id="formulaire-requetes">
-    <div style="width: 50%; margin: 0 auto;">
-        <label for="requete">Argument 1</label>
-        <input type="text" id="requete">
-        <label for="requete-2">Argument 2</label>
-        <input type="text" id="requete-2"> <br><br>
+            <input type="submit" id="movie-options" value="OPTIONS movie">
+            <input type="submit" id="movie-put" value="PUT movie">
+            <input type="submit" id="movie-get" value="GET movie"> <br><br>
 
-        <input type="submit" id="customer-options" value="OPTIONS customer">
-        <input type="submit" id="customer-put" value="PUT customer">
-        <input type="submit" id="customer-get" value="GET customer"> <br><br>
-
-        <input type="submit" id="movie-options" value="OPTIONS movie">
-        <input type="submit" id="movie-put" value="PUT movie">
-        <input type="submit" id="movie-get" value="GET movie"> <br><br>
-
-        <input type="submit" id="statement-options" value="OPTIONS statement">
-        <input type="submit" id="statement-get" value="GET statement"> 
-</div>
-</form> <br>
+            <input type="submit" id="statement-options" value="OPTIONS statement">
+            <input type="submit" id="statement-get" value="GET statement"> 
+        </div>
+    </form> <br>
 
 <div id="resultat-ajax">Responses Ajax: <br></div>
 
